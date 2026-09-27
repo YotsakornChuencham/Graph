@@ -21,6 +21,8 @@ const STATION_POSITIONS = {
   Riverside: { x: 260, y: 250 },
   Stadium: { x: 160, y: 50 },
   Market: { x: 260, y: 150 },
+  Park: { x: 210, y: 200 },
+  Temple: { x: 215, y: 110 },
 };
 
 const WEIGHT_LABELS = {

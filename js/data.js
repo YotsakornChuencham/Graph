@@ -17,11 +17,13 @@ const STATIONS = [
   { id: "Central", nameTh: "เซ็นทรัล", mode: "rail" },
   { id: "City Center", nameTh: "ซิตี้เซ็นเตอร์", mode: "rail" },
   { id: "University", nameTh: "มหาวิทยาลัย", mode: "rail" },
-  { id: "Airport", nameTh: "สนามบิน", mode: "bus" },
+  { id: "Airport", nameTh: "สนามบิน", mode: "rail" },
   { id: "Old Town", nameTh: "เมืองเก่า", mode: "bus" },
   { id: "Riverside", nameTh: "ริมแม่น้ำ", mode: "bus" },
   { id: "Stadium", nameTh: "สนามกีฬา", mode: "rail" },
-  { id: "Market", nameTh: "ตลาด", mode: "rail" },
+  { id: "Market", nameTh: "ตลาด", mode: "bus" },
+  { id: "Park", nameTh: "สวนสาธารณะ", mode: "rail" },
+  { id: "Temple", nameTh: "วัด", mode: "rail" },
 ];
 
 // เข้าถึงชื่อไทยของสถานีจาก id ได้อย่างรวดเร็ว
@@ -49,15 +51,21 @@ const LINES = {
 //    line      = สายที่ให้บริการช่วงนี้ (ใช้แสดงผลบน Itinerary)
 // ===================================================================
 const EDGES = [
-  { from: "Central", to: "City Center", time: 5, fare: 15, line: "Blue Line" },
-  { from: "Central", to: "Old Town", time: 7, fare: 20, line: "Route 3" },
-  { from: "City Center", to: "University", time: 6, fare: 20, line: "Blue Line" },
-  { from: "University", to: "Airport", time: 10, fare: 25, line: "Route 2" },
-  { from: "City Center", to: "Stadium", time: 8, fare: 25, line: "Green Line" },
-  { from: "Stadium", to: "Market", time: 4, fare: 12, line: "Green Line" },
-  { from: "Market", to: "Riverside", time: 6, fare: 18, line: "Route 1" },
+  { from: "Airport", to: "University", time: 10, fare: 25, line: "Blue Line" },
+  { from: "University", to: "Temple", time: 3, fare: 12, line: "Blue Line" },
+  { from: "Temple", to: "City Center", time: 3, fare: 12, line: "Blue Line" },
+  { from: "City Center", to: "Central", time: 5, fare: 15, line: "Blue Line" },
+
+  { from: "Stadium", to: "City Center", time: 8, fare: 25, line: "Green Line" },
+  { from: "City Center", to: "Old Town", time: 6, fare: 20, line: "Green Line" },
+
+  { from: "Central", to: "Old Town", time: 7, fare: 20, line: "Route 1" },
+  { from: "Temple", to: "Stadium", time: 2, fare: 12, line: "Blue Line" },
+  { from: "Temple", to: "Market", time: 2, fare: 12, line: "Route 2" },
+  { from: "Park", to: "Market", time: 3, fare: 12, line: "Route 1" },
+  { from: "Park", to: "Old Town", time: 2, fare: 12, line: "Route 1" },
+  { from: "Market", to: "Riverside", time: 6, fare: 18, line: "Route 2" },
   { from: "Riverside", to: "Old Town", time: 5, fare: 15, line: "Route 3" },
-  { from: "Old Town", to: "City Center", time: 6, fare: 20, line: "Route 3" },
 ];
 
 // ===================================================================
@@ -78,8 +86,9 @@ const transitTree = {
           type: "line",
           children: [
             { name: "Central", type: "station" },
-            { name: "City Center", type: "station" },
             { name: "University", type: "station" },
+            { name: "Temple", type: "station" },
+            { name: "Airport", type: "station" },
           ],
         },
         {
@@ -87,7 +96,7 @@ const transitTree = {
           type: "line",
           children: [
             { name: "Stadium", type: "station" },
-            { name: "Market", type: "station" },
+            { name: "City Center", type: "station" },
           ],
         },
       ],
@@ -99,12 +108,15 @@ const transitTree = {
         {
           name: "Route 1",
           type: "route",
-          children: [{ name: "Riverside", type: "station" }],
+          children:[
+                    { name: "Park", type: "station" },
+                    { name: "Market", type: "station" },
+                  ],
         },
         {
           name: "Route 2",
           type: "route",
-          children: [{ name: "Airport", type: "station" }],
+          children: [{ name: "Riverside", type: "station" }],
         },
         {
           name: "Route 3",
