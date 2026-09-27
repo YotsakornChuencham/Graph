@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TransitFlow — เลือกเส้นทางที่เหมาะกับคุณ</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- ============ HEADER / NAVIGATION ============ -->
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a class="brand" href="index.html">
+        <span class="brand__mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M4 17V7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z" stroke="#fff" stroke-width="1.6"/><path d="M4 13h16M9 21l-1.5-2M16.5 19 15 21" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/><circle cx="8" cy="9.5" r="1.1" fill="#fff"/><circle cx="16" cy="9.5" r="1.1" fill="#fff"/></svg>
+        </span>
+        <span class="brand__text">
+          <span class="brand__name">TransitFlow</span>
+          <span class="brand__tagline">Smart Transit Planner</span>
+        </span>
+      </a>
+
+      <button class="nav-toggle" type="button" aria-label="เปิดเมนู" aria-expanded="false">
+        <span class="nav-toggle__bar"></span>
+      </button>
+
+      <nav aria-label="เมนูหลัก">
+        <ul class="nav-menu">
+          <li><a href="index.html">ค้นหาเส้นทาง</a></li>
+          <li><a href="routes.html">เส้นทาง</a></li>
+          <li><a href="itinerary.html">รายละเอียด</a></li>
+          <li><a href="ticket.html">E-Ticket</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="container">
+      <span class="hero__eyebrow">TransitFlow · Smart Transit Planner</span>
+      <h1 class="hero__title">เลือกเส้นทางที่เหมาะกับคุณ</h1>
+      <p class="hero__desc">
+        จาก <strong id="route-origin-label">-</strong> ไป <strong id="route-destination-label">-</strong>
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ EMPTY STATE ============ -->
+  <div class="container" id="routes-empty-state" hidden></div>
+
+  <!-- ============ MAIN ============ -->
+  <main class="container page-section" id="routes-page" hidden>
+
+    <!-- เครือข่ายเส้นทาง -->
+    <section class="card" aria-labelledby="network-heading" style="margin-bottom:24px;">
+      <h2 id="network-heading" class="section-title">เครือข่ายเส้นทาง</h2>
+      <p class="section-desc">ภาพรวมโครงข่ายสถานีและเส้นทางทั้งหมดในระบบ TransitFlow</p>
+
+      <div class="summary-strip">
+        <div class="summary-stat">
+          <span class="summary-stat__value" id="summary-vertex">-</span>
+          <span class="summary-stat__label">สถานี (Vertex)</span>
+        </div>
+        <div class="summary-stat">
+          <span class="summary-stat__value" id="summary-edge">-</span>
+          <span class="summary-stat__label">เส้นทางเชื่อมต่อ (Edge)</span>
+        </div>
+        <div class="summary-stat">
+          <span class="summary-stat__value">Weighted</span>
+          <span class="summary-stat__label">เวลา / ค่าโดยสาร</span>
+        </div>
+        <div class="summary-stat">
+          <span class="summary-stat__value">Dijkstra</span>
+          <span class="summary-stat__label">Algorithm หลัก</span>
+        </div>
+      </div>
+
+      <p class="network-weight-mode">
+        แสดง Weight บนเส้นทาง: <strong id="network-weight-mode-label">เวลาเดินทาง (time)</strong>
+      </p>
+
+      <div class="network-wrap">
+        <svg id="network-svg" class="network-svg" viewBox="0 0 420 300" role="img" aria-label="แผนภาพเครือข่ายสถานี"></svg>
+      </div>
+
+      <div class="network-legend">
+        <span><span class="legend-dot" aria-hidden="true"></span> ● Station</span>
+        <span><span class="legend-line" style="background:var(--color-border)" aria-hidden="true"></span> ━━ Route</span>
+        <span><span class="legend-dot legend-dot--active" aria-hidden="true"></span> ★ Selected Path</span>
+        <span class="mono">5 min = เวลาเดินทาง</span>
+        <span class="mono">฿15 = ค่าโดยสาร</span>
+      </div>
+
+      <div style="margin-top:22px;">
+        <h3 class="section-title" style="font-size:0.95rem;">สำรวจเครือข่าย</h3>
+        <div class="explorer-buttons">
+          <button type="button" class="btn btn--secondary btn--sm" id="btn-bfs">BFS</button>
+          <button type="button" class="btn btn--secondary btn--sm" id="btn-dfs">DFS</button>
+        </div>
+        <div class="explorer-result mono" id="explorer-result">กดปุ่มเพื่อดูลำดับการสำรวจสถานีจากต้นทาง</div>
+      </div>
+    </section>
+
+    <!-- เปรียบเทียบเส้นทาง -->
+    <section class="card" aria-labelledby="options-heading">
+      <h2 id="options-heading" class="section-title">เปรียบเทียบเส้นทาง</h2>
+      <p class="section-desc">เลือกโหมดการคำนวณเพื่อดูเส้นทางที่เหมาะกับความต้องการของคุณ</p>
+
+      <div class="mode-tabs" role="tablist" aria-label="โหมดการคำนวณเส้นทาง">
+        <button type="button" class="mode-tab mode-tab--active" data-mode="time" role="tab" aria-selected="true">เร็วที่สุด</button>
+        <button type="button" class="mode-tab" data-mode="fare" role="tab" aria-selected="false">ประหยัดที่สุด</button>
+        <button type="button" class="mode-tab" data-mode="balanced" role="tab" aria-selected="false">แนะนำ</button>
+      </div>
+      <p class="algo-note">Algorithm: <strong>Dijkstra</strong> — Weight ที่ใช้: <span id="algo-weight-label">-</span></p>
+      <p class="algo-note algo-note--explain">
+        ระบบเรียกใช้ Dijkstra แยกครั้งตามแต่ละโหมด โดยกำหนด Weight ต่างกัน
+        (Time / Fare / Time + Fare) เพื่อคำนวณเส้นทางที่เหมาะกับวัตถุประสงค์ของผู้ใช้ในแต่ละโหมด
+      </p>
+
+      <div class="route-options-list" id="route-options-list"></div>
+    </section>
+
+    <!-- Path ตัวอย่าง -->
+    <section class="card" aria-labelledby="path-example-heading" style="margin-top:24px;">
+      <h2 id="path-example-heading" class="section-title">เส้นทางที่แนะนำในขณะนี้</h2>
+      <div id="path-example"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">TransitFlow · ระบบจำลองสำหรับการสาธิต ไม่ใช่บริการขนส่งจริง</div>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/tree.js"></script>
+  <script src="js/graph.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/routes.js"></script>
+</body>
+</html>

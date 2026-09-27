@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TransitFlow — E-Ticket ของคุณ</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- ============ HEADER / NAVIGATION ============ -->
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a class="brand" href="index.html">
+        <span class="brand__mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M4 17V7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z" stroke="#fff" stroke-width="1.6"/><path d="M4 13h16M9 21l-1.5-2M16.5 19 15 21" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/><circle cx="8" cy="9.5" r="1.1" fill="#fff"/><circle cx="16" cy="9.5" r="1.1" fill="#fff"/></svg>
+        </span>
+        <span class="brand__text">
+          <span class="brand__name">TransitFlow</span>
+          <span class="brand__tagline">Smart Transit Planner</span>
+        </span>
+      </a>
+
+      <button class="nav-toggle" type="button" aria-label="เปิดเมนู" aria-expanded="false">
+        <span class="nav-toggle__bar"></span>
+      </button>
+
+      <nav aria-label="เมนูหลัก">
+        <ul class="nav-menu">
+          <li><a href="index.html">ค้นหาเส้นทาง</a></li>
+          <li><a href="routes.html">เส้นทาง</a></li>
+          <li><a href="itinerary.html">รายละเอียด</a></li>
+          <li><a href="ticket.html">E-Ticket</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="container">
+      <span class="hero__eyebrow">TransitFlow · Smart Transit Planner</span>
+      <h1 class="hero__title">E-Ticket ของคุณ</h1>
+      <p class="hero__desc">ตั๋วเดินทางแบบจำลองสำหรับการสาธิตระบบ TransitFlow</p>
+    </div>
+  </section>
+
+  <!-- ============ EMPTY STATE ============ -->
+  <div class="container" id="ticket-empty-state" hidden></div>
+
+  <!-- ============ MAIN ============ -->
+  <main class="container page-section" id="ticket-page" hidden>
+    <div class="ticket-wrap">
+      <div class="ticket">
+        <div class="ticket__header">
+          <span class="ticket__brand">TransitFlow</span>
+          <span class="ticket__type">E-TICKET</span>
+        </div>
+
+        <div class="ticket__body">
+          <p class="ticket__route" id="ticket-route">-</p>
+          <p class="ticket__route-en mono" id="ticket-route-en">-</p>
+
+          <div class="ticket__grid">
+            <div class="ticket__field">
+              <span class="label">สายที่ใช้บริการ</span>
+              <span class="value" id="ticket-lines">-</span>
+            </div>
+            <div class="ticket__field">
+              <span class="label">เวลาเดินทาง</span>
+              <span class="value" id="ticket-time">-</span>
+            </div>
+            <div class="ticket__field">
+              <span class="label">ค่าโดยสารรวม</span>
+              <span class="value" id="ticket-fare">-</span>
+            </div>
+            <div class="ticket__field">
+              <span class="label">ออกตั๋วเมื่อ</span>
+              <span class="value" id="ticket-issued">-</span>
+            </div>
+          </div>
+
+          <hr class="ticket__divider" />
+
+          <div class="ticket__qr-wrap">
+            <div class="ticket__qr" id="ticket-qr" role="img" aria-label="QR Code จำลองสำหรับตั๋วเดินทาง"></div>
+            <span class="ticket__id" id="ticket-id">TF-000000</span>
+          </div>
+
+          <p class="ticket__disclaimer">
+            ตั๋วนี้เป็นข้อมูลจำลองสำหรับการสาธิตระบบ ไม่สามารถใช้เดินทางจริงได้
+          </p>
+        </div>
+      </div>
+
+      <div class="ticket-actions">
+        <a href="index.html" class="btn btn--secondary btn--block">ค้นหาเส้นทางใหม่</a>
+        <button type="button" class="btn btn--primary btn--block" id="btn-print-ticket">พิมพ์ตั๋ว</button>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">TransitFlow · ระบบจำลองสำหรับการสาธิต ไม่ใช่บริการขนส่งจริง</div>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/tree.js"></script>
+  <script src="js/graph.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/ticket.js"></script>
+</body>
+</html>

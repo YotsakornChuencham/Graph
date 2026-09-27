@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TransitFlow — รายละเอียดการเดินทาง</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- ============ HEADER / NAVIGATION ============ -->
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a class="brand" href="index.html">
+        <span class="brand__mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M4 17V7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z" stroke="#fff" stroke-width="1.6"/><path d="M4 13h16M9 21l-1.5-2M16.5 19 15 21" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/><circle cx="8" cy="9.5" r="1.1" fill="#fff"/><circle cx="16" cy="9.5" r="1.1" fill="#fff"/></svg>
+        </span>
+        <span class="brand__text">
+          <span class="brand__name">TransitFlow</span>
+          <span class="brand__tagline">Smart Transit Planner</span>
+        </span>
+      </a>
+
+      <button class="nav-toggle" type="button" aria-label="เปิดเมนู" aria-expanded="false">
+        <span class="nav-toggle__bar"></span>
+      </button>
+
+      <nav aria-label="เมนูหลัก">
+        <ul class="nav-menu">
+          <li><a href="index.html">ค้นหาเส้นทาง</a></li>
+          <li><a href="routes.html">เส้นทาง</a></li>
+          <li><a href="itinerary.html">รายละเอียด</a></li>
+          <li><a href="ticket.html">E-Ticket</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="container">
+      <span class="hero__eyebrow">TransitFlow · Smart Transit Planner</span>
+      <h1 class="hero__title">รายละเอียดการเดินทาง</h1>
+      <p class="hero__desc">
+        <strong id="itinerary-origin">-</strong> → <strong id="itinerary-destination">-</strong>
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ EMPTY STATE ============ -->
+  <div class="container" id="itinerary-empty-state" hidden></div>
+
+  <!-- ============ MAIN ============ -->
+  <main class="container page-section" id="itinerary-page" hidden>
+    <div class="card" style="max-width:640px; margin:0 auto;">
+      <h2 class="section-title">ไทม์ไลน์การเดินทาง</h2>
+      <p class="section-desc">โหมดที่ใช้คำนวณ: <span id="itinerary-weight-mode">-</span></p>
+
+      <ol class="timeline-list" id="timeline-list"></ol>
+
+      <div class="itinerary-summary">
+        <div class="itinerary-summary__item">
+          <span class="value" id="itinerary-total-time">-</span>
+          <span class="label">เวลาเดินทางรวม</span>
+        </div>
+        <div class="itinerary-summary__item">
+          <span class="value" id="itinerary-total-fare">-</span>
+          <span class="label">ค่าโดยสารรวม</span>
+        </div>
+      </div>
+
+      <button type="button" class="btn btn--primary btn--block" id="btn-confirm-trip" style="margin-top:24px;">
+        ยืนยันการเดินทาง
+      </button>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">TransitFlow · ระบบจำลองสำหรับการสาธิต ไม่ใช่บริการขนส่งจริง</div>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/tree.js"></script>
+  <script src="js/graph.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/itinerary.js"></script>
+</body>
+</html>
